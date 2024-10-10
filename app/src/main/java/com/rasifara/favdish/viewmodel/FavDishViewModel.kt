@@ -19,6 +19,13 @@ class FavDishViewModel(private val repository: FavDishRepository) : ViewModel() 
         repository.updateFavDishData(dish)
     }
 
+    fun delete(dish: FavDish) = viewModelScope.launch {
+        repository.deleteFavDishData(dish)
+    }
+
+    fun getFilteredList(filterType: String): LiveData<List<FavDish>> =
+        repository.filteredDishes(filterType).asLiveData()
+
     val allDishesList: LiveData<List<FavDish>> = repository.allDishesList.asLiveData()
 
     val favoriteDishes: LiveData<List<FavDish>> = repository.favoriteDishes.asLiveData()
@@ -26,7 +33,8 @@ class FavDishViewModel(private val repository: FavDishRepository) : ViewModel() 
 }
 
 @Suppress("UNCHECKED_CAST")
-class FavDishViewModelFactory(private val repository: FavDishRepository) : ViewModelProvider.Factory {
+class FavDishViewModelFactory(private val repository: FavDishRepository) :
+    ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(FavDishViewModel::class.java)) {
             return FavDishViewModel(repository) as T

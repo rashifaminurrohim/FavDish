@@ -1,7 +1,7 @@
 package com.rasifara.favdish.view.adapters
 
 import android.annotation.SuppressLint
-import android.util.Log
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +12,8 @@ import com.bumptech.glide.Glide
 import com.rasifara.favdish.R
 import com.rasifara.favdish.databinding.ItemDishLayoutBinding
 import com.rasifara.favdish.model.entities.FavDish
+import com.rasifara.favdish.utils.Constants
+import com.rasifara.favdish.view.activities.AddUpdateDishActivity
 import com.rasifara.favdish.view.fragments.AllDishesFragment
 import com.rasifara.favdish.view.fragments.FavouriteDishesFragment
 
@@ -56,9 +58,13 @@ class FavDishAdapter(private val fragment: Fragment) :
             popup.menuInflater.inflate(R.menu.menu_adapter, popup.menu)
             popup.setOnMenuItemClickListener {
                 if (it.itemId == R.id.action_edit_dish) {
-                    Log.i("You have clicked on", "Edit option of ${dish.title}")
+                    val intent = Intent(fragment.requireActivity(), AddUpdateDishActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_DISH_DETAIL, dish)
+                    fragment.requireActivity().startActivity(intent)
                 } else if (it.itemId == R.id.action_delete_dish) {
-                    Log.i("You have clicked on", "Delete option of ${dish.title}")
+                   if (fragment is AllDishesFragment) {
+                       fragment.deleteDish(dish)
+                   }
                 }
                 true
             }
