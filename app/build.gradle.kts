@@ -53,15 +53,24 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.activity)
 
+    // responsive dimens
     implementation ("com.intuit.sdp:sdp-android:1.0.6")
+    // permission management
     implementation("com.karumi:dexter:6.2.2")
+    // image arrangements
     implementation("com.github.bumptech.glide:glide:4.11.0")
+    // color extractions
     implementation("androidx.palette:palette:1.0.0")
+    // retrofit for api calls
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
 
 
     // room database
     implementation (libs.androidx.room.runtime)
     implementation (libs.androidx.room.ktx)
+    implementation(libs.androidx.swiperefreshlayout)
     ksp (libs.androidx.room.compiler)
     androidTestImplementation (libs.androidx.room.testing)
 
