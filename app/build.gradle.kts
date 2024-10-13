@@ -70,6 +70,9 @@ dependencies {
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
     implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
 
+    // work manager
+    implementation("androidx.work:work-runtime-ktx:2.9.1")
+
     // room database
     implementation (libs.androidx.room.runtime)
     implementation (libs.androidx.room.ktx)

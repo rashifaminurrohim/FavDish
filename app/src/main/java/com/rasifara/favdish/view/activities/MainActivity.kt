@@ -8,8 +8,15 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.rasifara.favdish.R
 import com.rasifara.favdish.databinding.ActivityMainBinding
+import com.rasifara.favdish.notification.NotifyWorker
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,18 +35,41 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_all_dishes, R.id.navigation_favourite_dishes, R.id.navigation_random_dish
+                R.id.navigation_all_dishes,
+                R.id.navigation_favourite_dishes,
+                R.id.navigation_random_dish
             )
         )
         setupActionBarWithNavController(mNavController, appBarConfiguration)
         mBinding.navView.setupWithNavController(mNavController)
+        startNotificationWork()
+    }
+
+    private fun createNotificationConstraints() = Constraints.Builder()
+        .setRequiresBatteryNotLow(true)
+        .setRequiresCharging(false)
+        .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+        .build()
+
+    private fun createNotificationRequest() =
+        PeriodicWorkRequestBuilder<NotifyWorker>(15, TimeUnit.MINUTES)
+            .setConstraints(createNotificationConstraints())
+            .build()
+
+    private fun startNotificationWork() {
+        WorkManager.getInstance(this)
+            .enqueueUniquePeriodicWork(
+                "FavDish Notify Work",
+                ExistingPeriodicWorkPolicy.KEEP,
+                createNotificationRequest()
+            )
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return mNavController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    fun hideBottomNavigationView(){
+    fun hideBottomNavigationView() {
         mBinding.navView.apply {
             clearAnimation()
             animate().translationY(mBinding.navView.height.toFloat()).duration = 300
@@ -47,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun showBottomNavigationView(){
+    fun showBottomNavigationView() {
         mBinding.navView.apply {
             clearAnimation()
             animate().translationY(0f).duration = 300
