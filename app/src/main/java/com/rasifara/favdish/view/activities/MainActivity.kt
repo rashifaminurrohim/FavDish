@@ -1,6 +1,7 @@
 package com.rasifara.favdish.view.activities
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         mBinding.navView.apply {
             clearAnimation()
             animate().translationY(mBinding.navView.height.toFloat()).duration = 300
+            mBinding.navView.visibility = View.GONE
         }
     }
 
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         mBinding.navView.apply {
             clearAnimation()
             animate().translationY(0f).duration = 300
+            mBinding.navView.visibility = View.VISIBLE
         }
     }
 }
