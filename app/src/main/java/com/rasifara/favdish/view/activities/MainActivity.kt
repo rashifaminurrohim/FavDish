@@ -16,6 +16,7 @@ import androidx.work.WorkManager
 import com.rasifara.favdish.R
 import com.rasifara.favdish.databinding.ActivityMainBinding
 import com.rasifara.favdish.notification.NotifyWorker
+import com.rasifara.favdish.utils.Constants
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -31,8 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(mBinding.root)
 
         mNavController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_all_dishes,
@@ -42,6 +42,11 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(mNavController, appBarConfiguration)
         mBinding.navView.setupWithNavController(mNavController)
+
+        if (intent.hasExtra(Constants.NOTOFICATION_ID)) {
+            val notificationId = intent.getIntExtra(Constants.NOTOFICATION_ID, 0)
+            mBinding.navView.selectedItemId = R.id.navigation_random_dish
+        }
         startNotificationWork()
     }
 

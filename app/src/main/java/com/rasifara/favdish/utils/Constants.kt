@@ -21,11 +21,16 @@ object Constants {
 
     const val BASE_URL: String = "https://api.spoonacular.com/"
 
-    const val API_KEY_VALUE: String = "your_api_key"
+    const val API_KEY_VALUE: String = "61d3376ff92f425eaa2435ae84d64a79"
     const val INCLUDE_NUTRITION_VALUE: Boolean = true
     const val INCLUDE_TAGS_VALUE: String = "vegetarian, dessert"
     const val EXCLUDE_TAGS_VALUE: String = ""
     const val NUMBER_VALUE: Int = 1
+
+    const val NOTOFICATION_ID = "FavDish_notification_id"
+    const val NOTIFICATION_NAME = "FavDish"
+    const val NOTIFICATION_CHANNEL = "FavDish_channel_01"
+
 
     fun dishTypes(): ArrayList<String>{
         val list = ArrayList<String>()

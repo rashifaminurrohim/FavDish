@@ -55,6 +55,7 @@ import java.io.IOException
 import java.io.OutputStream
 import java.util.UUID
 
+@Suppress("DEPRECATION")
 class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityAddUpdateDishBinding
